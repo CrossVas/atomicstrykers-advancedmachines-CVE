@@ -2,8 +2,10 @@ package atomicstryker.ic2.advancedmachines.client;
 
 import org.lwjgl.opengl.GL11;
 
+import ic2.core.IC2;
 import ic2.core.block.machine.container.ContainerOreWashing;
 import ic2.core.block.machine.tileentity.TileEntityOreWashing;
+import ic2.core.upgrade.IUpgradableBlock;
 import ic2.core.util.DrawUtil;
 import ic2.core.util.GuiTooltipHelper;
 import net.minecraft.client.gui.inventory.GuiContainer;
@@ -26,15 +28,19 @@ public class GuiRotaryOreWasher extends GuiContainer {
 	}
 
 	@Override
-	protected void drawGuiContainerForegroundLayer(int par1, int par2) {
-		this.fontRendererObj.drawString(StatCollector.translateToLocal("item.advancedmachines:rotaryOreWasher.name"), 8,
-				6, 4210752);
+	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
+		this.fontRendererObj.drawString(StatCollector.translateToLocal("item.advancedmachines:rotaryOreWasher.name"), 16,
+				4, 4210752);
 
 		FluidStack fluidstack = ((TileEntityOreWashing) this.container.base).getFluidStackfromTank();
 		if (fluidstack != null) {
 			String tooltip = fluidstack.getFluid().getName() + ": " + fluidstack.amount
 					+ StatCollector.translateToLocal("ic2.generic.text.mb");
-			GuiTooltipHelper.drawAreaTooltip(par1 - this.guiLeft, par2 - this.guiTop, tooltip, 63, 23, 76, 71);
+			GuiTooltipHelper.drawAreaTooltip(mouseX - this.guiLeft, mouseY - this.guiTop, tooltip, 63, 23, 76, 71);
+		}
+		if (this.container.base instanceof IUpgradableBlock) {
+			GuiTooltipHelper.drawUpgradeslotTooltip(mouseX - this.guiLeft, mouseY - this.guiTop, 0, 0, 12, 12,
+					(IUpgradableBlock) this.container.base, 25, 0);
 		}
 	}
 
@@ -45,6 +51,15 @@ public class GuiRotaryOreWasher extends GuiContainer {
 		int xOffset = (this.width - this.xSize) / 2;
 		int yOffset = (this.height - this.ySize) / 2;
 		drawTexturedModalRect(xOffset, yOffset, 0, 0, this.xSize, this.ySize);
+		
+		if (this.container.base instanceof IUpgradableBlock) {
+			int xoffset = (this.width - this.xSize) / 2;
+			int yoffset = (this.height - this.ySize) / 2;
+			this.mc.getTextureManager()
+					.bindTexture(new ResourceLocation(IC2.textureDomain, "textures/gui/infobutton.png"));
+			drawTexturedModalRect(xoffset + 3, yoffset + 3, 0, 0, 10, 10);
+			this.mc.getTextureManager().bindTexture(tex);
+		}
 
 		int chargeLevel = (int) (14.0F * ((TileEntityOreWashing) this.container.base).getChargeLevel());
 		int progress = (int) (20.0F * ((TileEntityOreWashing) this.container.base).getProgress());
