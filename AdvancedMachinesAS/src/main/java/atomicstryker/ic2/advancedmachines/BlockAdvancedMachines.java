@@ -1,15 +1,15 @@
 package atomicstryker.ic2.advancedmachines;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Random;
+
+import atomicstryker.ic2.advancedmachines.client.AdvancedMachinesClient;
 import ic2.api.item.IC2Items;
 import ic2.api.tile.IWrenchable;
 import ic2.core.IC2;
 import ic2.core.block.TileEntityBlock;
 import ic2.core.block.machine.tileentity.TileEntityStandardMachine;
-
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Random;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
@@ -26,7 +26,6 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
-import atomicstryker.ic2.advancedmachines.client.AdvancedMachinesClient;
 
 public class BlockAdvancedMachines extends BlockContainer {
 
@@ -282,37 +281,7 @@ public class BlockAdvancedMachines extends BlockContainer {
 			return;
 		}
 		int meta = world.getBlockMetadata(i, j, k);
-
-		if ((meta == 1) && (isActive(world, i, j, k))) {
-			TileEntity te = world.getTileEntity(i, j, k);
-			int facing = (te instanceof TileEntityBlock) ? ((TileEntityBlock) te).getFacing() : 0;
-
-			float f = i + 0.5F;
-			float f1 = j + 0.0F + random.nextFloat() * 6.0F / 16.0F;
-			float f2 = k + 0.5F;
-			float f3 = 0.52F;
-			float f4 = random.nextFloat() * 0.6F - 0.3F;
-
-			switch (facing) {
-			case 4:
-				world.spawnParticle("smoke", f - f3, f1, f2 + f4, 0.0D, 0.0D, 0.0D);
-				world.spawnParticle("flame", f - f3, f1, f2 + f4, 0.0D, 0.0D, 0.0D);
-				break;
-			case 5:
-				world.spawnParticle("smoke", f + f3, f1, f2 + f4, 0.0D, 0.0D, 0.0D);
-				world.spawnParticle("flame", f + f3, f1, f2 + f4, 0.0D, 0.0D, 0.0D);
-				break;
-			case 2:
-				world.spawnParticle("smoke", f + f4, f1, f2 - f3, 0.0D, 0.0D, 0.0D);
-				world.spawnParticle("flame", f + f4, f1, f2 - f3, 0.0D, 0.0D, 0.0D);
-				break;
-			case 3:
-				world.spawnParticle("smoke", f + f4, f1, f2 + f3, 0.0D, 0.0D, 0.0D);
-				world.spawnParticle("flame", f + f4, f1, f2 + f3, 0.0D, 0.0D, 0.0D);
-			}
-
-		}
-		if ((meta == 3) && (isActive(world, i, j, k))) {
+		if (((meta == 0) || (meta == 3)) && (isActive(world, i, j, k))) {
 			float f = i + 1.0F;
 			float f1 = j + 1.0F;
 			float f2 = k + 1.0F;

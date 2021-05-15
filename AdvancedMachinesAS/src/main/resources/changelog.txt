@@ -1,3 +1,11 @@
+Version 1.1.7.1
+    - adapted AM textures to IC2-style
+    - removed ugly alpha-style flame particle from compressor, Advanced Machines now copy IC2 machines particles 
+Version 1.1.7
+    - added Redstone Inverter Support. Make sure you double check your machine when switching from mechanical redstone (lever, torches);
+    - fixed Rotary Macerator's Progress Bar;
+    - some cosmetics (Block rarity, tooltips, Upgrade Info);
+    - moved all advanced Machines from RedstoneTab(!!) to IC2.
 Version 1.1.6
 	- updated (and requires) to IC 2.2.775
 	- added hack to circumvent the input==output check for the supplemented macerator recipes
