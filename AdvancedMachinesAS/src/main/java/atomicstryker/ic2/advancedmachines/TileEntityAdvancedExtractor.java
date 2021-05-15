@@ -10,82 +10,70 @@ import java.util.List;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
-public class TileEntityAdvancedExtractor extends TileEntityExtractor implements IAdvancedMachine
-{
-    
-    private final CommonLogicAdvancedMachines advLogic;
+public class TileEntityAdvancedExtractor extends TileEntityExtractor implements IAdvancedMachine {
 
-    public TileEntityAdvancedExtractor()
-    {
-        super();
-        advLogic = new CommonLogicAdvancedMachines("%5d M/S", 1);
-        advLogic.getOutputSlots().add(outputSlot);
-        advLogic.getOutputSlots().add(new InvSlotOutput(this, "outputextra1", 4, 1));
-        advLogic.getOutputSlots().add(new InvSlotOutput(this, "outputextra2", 5, 1));
-    }
-    
-    @Override
-    public void readFromNBT(NBTTagCompound nbtt)
-    {
-        super.readFromNBT(nbtt);
-        advLogic.readFromNBT(nbtt);
-    }
-    
-    @Override
-    public void writeToNBT(NBTTagCompound nbtt)
-    {
-        super.writeToNBT(nbtt);
-        advLogic.writeToNBT(nbtt);
-    }
-    
-    @Override
-    public void updateEntityServer()
-    {
-        super.updateEntityServer();
-        advLogic.updateEntity(this);
-    }
-    
-    @Override
-    public void setOverclockRates()
-    {
-        super.setOverclockRates();
-        advLogic.setOverclockRates(this);
-    }
-    
-    @Override
-    public RecipeOutput getOutput()
-    {
-        return advLogic.getOutput(this);
-    }
+	private final CommonLogicAdvancedMachines advLogic;
 
-    @Override
-    public void operateOnce(RecipeOutput output, List<ItemStack> processResult)
-    {
-        advLogic.operateOnce(this, output, processResult);
-    }
-    
-    @Override
-    public String printFormattedData()
-    {
-        return advLogic.printFormattedData();
-    }
+	public TileEntityAdvancedExtractor() {
+		super();
+		advLogic = new CommonLogicAdvancedMachines("%5d M/S", 1);
+		advLogic.getOutputSlots().add(outputSlot);
+		advLogic.getOutputSlots().add(new InvSlotOutput(this, "outputextra1", 4, 1));
+		advLogic.getOutputSlots().add(new InvSlotOutput(this, "outputextra2", 5, 1));
+	}
 
-    @Override
-    public int getSpeed()
-    {
-        return advLogic.getSpeed();
-    }
+	@Override
+	public void readFromNBT(NBTTagCompound nbtt) {
+		super.readFromNBT(nbtt);
+		advLogic.readFromNBT(nbtt);
+	}
 
-    @Override
-    public void setClientSpeed(int value)
-    {
-        advLogic.setClientSpeed(value);
-    }
+	@Override
+	public void writeToNBT(NBTTagCompound nbtt) {
+		super.writeToNBT(nbtt);
+		advLogic.writeToNBT(nbtt);
+	}
 
-    @Override
-    public ArrayList<InvSlotOutput> getOutputSlots()
-    {
-        return advLogic.getOutputSlots();
-    }
+	@Override
+	public void updateEntityServer() {
+		super.updateEntityServer();
+		advLogic.updateEntity(this);
+	}
+
+	@Override
+	public void setOverclockRates() {
+		super.setOverclockRates();
+		advLogic.setOverclockRates(this);
+	}
+
+	@Override
+	public RecipeOutput getOutput() {
+		return advLogic.getOutput(this);
+	}
+
+	@Override
+	public void operateOnce(RecipeOutput output, List<ItemStack> processResult) {
+		advLogic.operateOnce(this, output, processResult);
+	}
+
+	@Override
+	public String printFormattedData() {
+		return advLogic.printFormattedData();
+	}
+
+	@Override
+	public int getSpeed() {
+		return advLogic.getSpeed();
+	}
+
+	@Override
+	public void setClientSpeed(int value) {
+		advLogic.setClientSpeed(value);
+	}
+
+	@Override
+	public ArrayList<InvSlotOutput> getOutputSlots() {
+		return advLogic.getOutputSlots();
+	}
 
 }

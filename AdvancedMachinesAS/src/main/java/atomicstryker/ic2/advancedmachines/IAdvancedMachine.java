@@ -4,15 +4,14 @@ import ic2.core.block.invslot.InvSlotOutput;
 
 import java.util.ArrayList;
 
-public interface IAdvancedMachine
-{
+public interface IAdvancedMachine {
 
-    String printFormattedData();
+	String printFormattedData();
 
-    int getSpeed();
+	int getSpeed();
 
-    void setClientSpeed(int value);
-    
-    ArrayList<InvSlotOutput> getOutputSlots();
-    
+	void setClientSpeed(int value);
+
+	ArrayList<InvSlotOutput> getOutputSlots();
+
 }

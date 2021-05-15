@@ -15,66 +15,43 @@ import atomicstryker.ic2.advancedmachines.TileEntityAdvancedMacerator;
 import atomicstryker.ic2.advancedmachines.TileEntityAdvancedOreWasher;
 import atomicstryker.ic2.advancedmachines.TileEntityAdvancedRecycler;
 
-public class AdvancedMachinesClient implements IProxy
-{
-    public static int[][] sideAndFacingToSpriteOffset;
+public class AdvancedMachinesClient implements IProxy {
+	public static int[][] sideAndFacingToSpriteOffset;
 
-    @Override
-    public void load()
-    {        
-        try
-        {
-            sideAndFacingToSpriteOffset = (int[][])Class.forName("ic2.core.block.BlockMultiID").getField("sideAndFacingToSpriteOffset").get(null);
-        }
-        catch (Exception e)
-        {
-            sideAndFacingToSpriteOffset = new int[][]{
-                    {
-                        3, 2, 0, 0, 0, 0
-                    }, {
-                        2, 3, 1, 1, 1, 1
-                    }, {
-                        1, 1, 3, 2, 5, 4
-                    }, {
-                        0, 0, 2, 3, 4, 5
-                    }, {
-                        4, 5, 4, 5, 3, 2
-                    }, {
-                        5, 4, 5, 4, 2, 3
-                    }
-            };
-        }
-    }
+	@Override
+	public void load() {
+		try {
+			sideAndFacingToSpriteOffset = (int[][]) Class.forName("ic2.core.block.BlockMultiID")
+					.getField("sideAndFacingToSpriteOffset").get(null);
+		} catch (Exception e) {
+			sideAndFacingToSpriteOffset = new int[][] { { 3, 2, 0, 0, 0, 0 }, { 2, 3, 1, 1, 1, 1 },
+					{ 1, 1, 3, 2, 5, 4 }, { 0, 0, 2, 3, 4, 5 }, { 4, 5, 4, 5, 3, 2 }, { 5, 4, 5, 4, 2, 3 } };
+		}
+	}
 
-    @Override
-    public Object getGuiElementForClient(int ID, EntityPlayer player, World world, int x, int y, int z)
-    {
-        TileEntity te = world.getTileEntity(x, y, z);
-        if (te != null)
-        {
-            if (te instanceof TileEntityAdvancedMacerator)
-            {
-                return new GuiRotaryMacerator(new ContainerAdvancedMacerator(player, (TileEntityAdvancedMacerator) te), (TileEntityAdvancedMacerator) te);
-            }
-            else if (te instanceof TileEntityAdvancedExtractor)
-            {
-                return new GuiCentrifugeExtractor(new ContainerAdvancedMachine<TileEntityStandardMachine>(player, (TileEntityAdvancedExtractor) te), (TileEntityAdvancedExtractor) te);
-            }
-            else if (te instanceof TileEntityAdvancedCompressor)
-            {
-                return new GuiSingularityCompressor(new ContainerAdvancedMachine<TileEntityStandardMachine>(player, (TileEntityAdvancedCompressor) te), (TileEntityAdvancedCompressor) te);
-            }
-            else if (te instanceof TileEntityAdvancedRecycler)
-            {
-                return new GuiCombinedRecycler(new ContainerAdvancedMachine<TileEntityStandardMachine>(player, (TileEntityAdvancedRecycler) te), (TileEntityAdvancedRecycler) te);
-            }
-            else if (te instanceof TileEntityAdvancedOreWasher)
-            {
-                return new GuiRotaryOreWasher(new ContainerOreWashing(player, (TileEntityOreWashing) te), (TileEntityOreWashing) te);
-            }
-        }
+	@Override
+	public Object getGuiElementForClient(int ID, EntityPlayer player, World world, int x, int y, int z) {
+		TileEntity te = world.getTileEntity(x, y, z);
+		if (te != null) {
+			if (te instanceof TileEntityAdvancedMacerator) {
+				return new GuiRotaryMacerator(new ContainerAdvancedMacerator(player, (TileEntityAdvancedMacerator) te),
+						(TileEntityAdvancedMacerator) te);
+			} else if (te instanceof TileEntityAdvancedExtractor) {
+				return new GuiCentrifugeExtractor(new ContainerAdvancedMachine<TileEntityStandardMachine>(player,
+						(TileEntityAdvancedExtractor) te), (TileEntityAdvancedExtractor) te);
+			} else if (te instanceof TileEntityAdvancedCompressor) {
+				return new GuiSingularityCompressor(new ContainerAdvancedMachine<TileEntityStandardMachine>(player,
+						(TileEntityAdvancedCompressor) te), (TileEntityAdvancedCompressor) te);
+			} else if (te instanceof TileEntityAdvancedRecycler) {
+				return new GuiCombinedRecycler(new ContainerAdvancedMachine<TileEntityStandardMachine>(player,
+						(TileEntityAdvancedRecycler) te), (TileEntityAdvancedRecycler) te);
+			} else if (te instanceof TileEntityAdvancedOreWasher) {
+				return new GuiRotaryOreWasher(new ContainerOreWashing(player, (TileEntityOreWashing) te),
+						(TileEntityOreWashing) te);
+			}
+		}
 
-        return null;
-    }
+		return null;
+	}
 
 }
