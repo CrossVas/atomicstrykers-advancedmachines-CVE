@@ -4,17 +4,24 @@ import java.util.List;
 
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.StatCollector;
 
 public class ItemAdvancedMachine extends ItemBlock {
 	public ItemAdvancedMachine(Block b) {
 		super(b);
 		setMaxDamage(0);
 		setHasSubtypes(true);
-		setCreativeTab(CreativeTabs.tabBlock);
+	}
+	
+	@Override
+	public void addInformation(ItemStack stack, EntityPlayer player, List info, boolean bool) {
+		info.add("128 EU/t " + StatCollector.translateToLocal("ic2.item.tooltip.max"));
 	}
 
 	@Override
@@ -23,8 +30,8 @@ public class ItemAdvancedMachine extends ItemBlock {
 	}
 
 	@Override
-	public String getItemStackDisplayName(ItemStack itemStack) {
-		return EnumChatFormatting.GOLD + super.getItemStackDisplayName(itemStack);
+	public EnumRarity getRarity(ItemStack stack) {
+		return EnumRarity.uncommon;
 	}
 
 	@Override

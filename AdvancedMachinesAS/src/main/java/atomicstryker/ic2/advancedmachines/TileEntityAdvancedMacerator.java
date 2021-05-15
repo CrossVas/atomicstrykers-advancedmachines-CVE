@@ -1,27 +1,31 @@
 package atomicstryker.ic2.advancedmachines;
 
+import java.util.ArrayList;
+import java.util.EnumSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
+
 import ic2.api.item.IC2Items;
 import ic2.api.recipe.RecipeOutput;
 import ic2.api.recipe.Recipes;
+import ic2.core.block.comp.Redstone;
 import ic2.core.block.invslot.InvSlot;
 import ic2.core.block.invslot.InvSlotOutput;
 import ic2.core.block.machine.tileentity.TileEntityMacerator;
-
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
+import ic2.core.upgrade.UpgradableProperty;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
-public class TileEntityAdvancedMacerator extends TileEntityMacerator implements IAdvancedMachine {
+public class TileEntityAdvancedMacerator extends TileEntityMacerator implements IAdvancedMachine, IRedstoneUpgrade {
 	public static final int MAIN_IN_SLOT_INDEX = 0;
 	public static final int SUPPLEMENT_SLOT_INDEX = 8;
 	public static final int EXTRA_OUT_SLOT_INDEX = 4;
 
 	private final CommonLogicAdvancedMachines advLogic;
+	private Redstone redstone;
 
 	public int supplementedItemsLeft = 0;
 	private int nextSupplementResultCount;
@@ -40,7 +44,7 @@ public class TileEntityAdvancedMacerator extends TileEntityMacerator implements 
 	private final ItemStack sand;
 	private final ItemStack netherrack;
 	private final ItemStack ice;
-	private final ItemStack redstone;
+	private final ItemStack redstoneDust;
 
 	private final InvSlot supplementSlot;
 
@@ -50,6 +54,7 @@ public class TileEntityAdvancedMacerator extends TileEntityMacerator implements 
 		advLogic.getOutputSlots().add(outputSlot);
 		advLogic.getOutputSlots().add(new InvSlotOutput(this, "outputextra1", EXTRA_OUT_SLOT_INDEX, 1));
 		supplementSlot = new InvSlot(this, "supplement", SUPPLEMENT_SLOT_INDEX, InvSlot.Access.I, 1);
+		this.redstone = addComponent(new Redstone(this));
 
 		idCopperOreCrushed = IC2Items.getItem("crushedCopperOre");
 		idTinOreCrushed = IC2Items.getItem("crushedTinOre");
@@ -64,7 +69,7 @@ public class TileEntityAdvancedMacerator extends TileEntityMacerator implements 
 		sand = new ItemStack(Blocks.sand);
 		netherrack = new ItemStack(Blocks.netherrack);
 		ice = new ItemStack(Blocks.ice);
-		redstone = new ItemStack(Items.redstone);
+		redstoneDust = new ItemStack(Items.redstone);
 	}
 
 	@Override
@@ -84,7 +89,7 @@ public class TileEntityAdvancedMacerator extends TileEntityMacerator implements 
 		super.updateEntityServer();
 		advLogic.updateEntity(this);
 
-		// is second output is not empty but primary is, swap output slot contents
+		/** is second output is not empty but primary is, swap output slot contents */
 		if (!advLogic.getOutputSlots().get(1).isEmpty() && advLogic.getOutputSlots().get(0).isEmpty()) {
 			advLogic.getOutputSlots().get(0).put(advLogic.getOutputSlots().get(1).get());
 			advLogic.getOutputSlots().get(1).put(null);
@@ -160,11 +165,12 @@ public class TileEntityAdvancedMacerator extends TileEntityMacerator implements 
 			} else if (original.isItemEqual(quartzOre) && supplement.isItemEqual(sand)) {
 				nextSupplementResultCount = 1;
 				results.add(twoQuartz);
-			} else if (original.isItemEqual(netherrack) && supplement.isItemEqual(redstone)) {
+			} else if (original.isItemEqual(netherrack) && supplement.isItemEqual(redstoneDust)) {
 				if (original.stackSize > 7) {
 					nextSupplementResultCount = 1;
 					results.add(new ItemStack(Items.glowstone_dust, 1));
-					nextSupplementResourceDrain = 6; // to pull 6 additional netherrack for a total cost of 7
+					/** to pull 6 additional netherrack for a total cost of 7 */
+					nextSupplementResourceDrain = 6;
 				}
 			} else if (result.isItemEqual(idCoalDust) && isWater(supplement)) {
 				nextSupplementResultCount = 8;
@@ -240,4 +246,14 @@ public class TileEntityAdvancedMacerator extends TileEntityMacerator implements 
 		return super.canExtractItem(slot, itemstack, blockSide);
 	}
 
+	@Override
+	public Set<UpgradableProperty> getUpgradableProperties() {
+		return EnumSet.of(UpgradableProperty.RedstoneSensitive, UpgradableProperty.ItemConsuming,
+				UpgradableProperty.ItemProducing);
+	}
+
+	@Override
+	public boolean hasRedstoneUpgrade() {
+		return this.redstone.hasRedstoneInput();
+	}
 }

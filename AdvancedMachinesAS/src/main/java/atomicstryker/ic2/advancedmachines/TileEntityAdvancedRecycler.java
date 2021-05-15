@@ -1,18 +1,22 @@
 package atomicstryker.ic2.advancedmachines;
 
+import java.util.ArrayList;
+import java.util.EnumSet;
+import java.util.List;
+import java.util.Set;
+
 import ic2.api.recipe.RecipeOutput;
+import ic2.core.block.comp.Redstone;
 import ic2.core.block.invslot.InvSlotOutput;
 import ic2.core.block.machine.tileentity.TileEntityRecycler;
-
-import java.util.ArrayList;
-import java.util.List;
-
+import ic2.core.upgrade.UpgradableProperty;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
-public class TileEntityAdvancedRecycler extends TileEntityRecycler implements IAdvancedMachine {
+public class TileEntityAdvancedRecycler extends TileEntityRecycler implements IAdvancedMachine, IRedstoneUpgrade {
 
 	private final CommonLogicAdvancedMachines advLogic;
+	private Redstone redstone;
 
 	public TileEntityAdvancedRecycler() {
 		super();
@@ -20,6 +24,7 @@ public class TileEntityAdvancedRecycler extends TileEntityRecycler implements IA
 		advLogic.getOutputSlots().add(outputSlot);
 		advLogic.getOutputSlots().add(new InvSlotOutput(this, "outputextra1", 4, 1));
 		advLogic.getOutputSlots().add(new InvSlotOutput(this, "outputextra2", 5, 1));
+		this.redstone = addComponent(new Redstone(this));
 	}
 
 	@Override
@@ -76,4 +81,14 @@ public class TileEntityAdvancedRecycler extends TileEntityRecycler implements IA
 		return advLogic.getOutputSlots();
 	}
 
+	@Override
+	public Set<UpgradableProperty> getUpgradableProperties() {
+		return EnumSet.of(UpgradableProperty.RedstoneSensitive, UpgradableProperty.ItemConsuming,
+				UpgradableProperty.ItemProducing);
+	}
+
+	@Override
+	public boolean hasRedstoneUpgrade() {
+		return this.redstone.hasRedstoneInput();
+	}
 }

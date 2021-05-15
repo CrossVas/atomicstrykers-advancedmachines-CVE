@@ -105,7 +105,13 @@ public class CommonLogicAdvancedMachines implements IAdvancedMachine {
 			return ic2Output;
 		}
 
-		if (te.hasWorldObj() && te.getWorldObj().isBlockIndirectlyGettingPowered(te.xCoord, te.yCoord, te.zCoord)) {
+		if (te.hasWorldObj() && te.getWorldObj().isBlockIndirectlyGettingPowered(te.xCoord, te.yCoord, te.zCoord)
+				&& !hasRedstone(te)) {
+			runningEmpty = true;
+			return dummyOut;
+		}
+
+		if (!te.getWorldObj().isBlockIndirectlyGettingPowered(te.xCoord, te.yCoord, te.zCoord) && hasRedstone(te)) {
 			runningEmpty = true;
 			return dummyOut;
 		}
@@ -137,16 +143,15 @@ public class CommonLogicAdvancedMachines implements IAdvancedMachine {
 				if (runningEmpty) {
 					progressField.set(te, (short) 0);
 				} else {
-					// progress typically goes from 0(start) to
-					// 400,500(operation end) and gets incremented by 1 every
-					// tick
-					// additionally, setOverClockRates may mess with it and
-					// further increment it
-					// the goal here is to increase the base processing speed to
-					// up to N*100% by calculating the speed
+					/**
+					 * progress typically goes from 0(start) to 400,500(operation end) and gets
+					 * incremented by 1 every tick additionally, setOverClockRates may mess with it
+					 * and further increment it the goal here is to increase the base processing
+					 * speed to up to N*100% by calculating the speed
+					 */
 					short extraprogress = (short) Math
 							.round(speed / (mod.maxMachineSpeedUpTicks / (mod.maxMachineSpeedUpFactor - 1)));
-					// this yields 0-n extra progress ticks
+					/** this yields 0-n extra progress ticks */
 					progressField.set(te, (short) (progressField.getShort(te) + extraprogress));
 				}
 			}
@@ -179,4 +184,10 @@ public class CommonLogicAdvancedMachines implements IAdvancedMachine {
 		return outSlotList;
 	}
 
+	public boolean hasRedstone(TileEntityStandardMachine te) {
+		if (te instanceof IRedstoneUpgrade) {
+			return ((IRedstoneUpgrade) te).hasRedstoneUpgrade();
+		}
+		return false;
+	}
 }

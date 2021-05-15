@@ -3,6 +3,7 @@ package atomicstryker.ic2.advancedmachines;
 import ic2.api.item.IC2Items;
 import ic2.api.recipe.IRecipeInput;
 import ic2.api.recipe.Recipes;
+import ic2.core.IC2;
 import ic2.core.block.machine.container.ContainerOreWashing;
 import ic2.core.block.machine.tileentity.TileEntityOreWashing;
 import ic2.core.block.machine.tileentity.TileEntityStandardMachine;
@@ -29,7 +30,7 @@ import cpw.mods.fml.common.network.IGuiHandler;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 
-@Mod(modid = "AdvancedMachines", name = "IC2 Advanced Machines Addon", version = "1.1.6", dependencies = "required-after:IC2@2.2.775")
+@Mod(modid = "AdvancedMachines", name = "IC2 Advanced Machines Addon", version = "1.1.7", dependencies = "required-after:IC2@2.2.775")
 public class ModAdvancedMachines implements IGuiHandler, IProxy {
 
 	@SidedProxy(clientSide = "atomicstryker.ic2.advancedmachines.client.AdvancedMachinesClient", serverSide = "atomicstryker.ic2.advancedmachines.ModAdvancedMachines")
@@ -57,7 +58,7 @@ public class ModAdvancedMachines implements IGuiHandler, IProxy {
 		config.load();
 
 		blockAdvancedMachine = new BlockAdvancedMachines();
-		blockAdvancedMachine.setCreativeTab(CreativeTabs.tabRedstone);
+		blockAdvancedMachine.setCreativeTab(IC2.tabIC2);
 
 		GameRegistry.registerBlock(blockAdvancedMachine, ItemAdvancedMachine.class, "blockAdvMachine");
 
@@ -98,7 +99,7 @@ public class ModAdvancedMachines implements IGuiHandler, IProxy {
 							Character.valueOf('A'), IC2Items.getItem("advancedMachine") });
 		}
 
-		// ident recipes for my supplemented specialties
+		/** ident recipes for my supplemented specialties */
 		Recipes.macerator.addRecipe(new IdentRecipe(new ItemStack(Blocks.netherrack)), new NBTTagCompound(),
 				new ItemStack(Blocks.netherrack));
 		Recipes.macerator.addRecipe(new IdentRecipe(new ItemStack(Blocks.quartz_ore)), new NBTTagCompound(),
@@ -140,9 +141,10 @@ public class ModAdvancedMachines implements IGuiHandler, IProxy {
 	}
 
 	private class IdentRecipe implements IRecipeInput {
-
-		// matches will return false ONCE to get past the input == output check Player
-		// so thoughtfully added
+		/**
+		 * matches will return false ONCE to get past the input == output check Player
+		 * so thoughtfully added
+		 */
 		boolean registerHackActive;
 		private ArrayList<ItemStack> inputresult;
 
@@ -195,12 +197,10 @@ public class ModAdvancedMachines implements IGuiHandler, IProxy {
 
 	@Override
 	public void load() {
-		// NOOP
 	}
 
 	@Override
 	public Object getGuiElementForClient(int ID, EntityPlayer player, World world, int x, int y, int z) {
-		// NOOP
 		return null;
 	}
 

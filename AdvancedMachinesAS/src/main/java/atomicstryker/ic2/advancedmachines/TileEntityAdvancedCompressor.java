@@ -1,23 +1,29 @@
 package atomicstryker.ic2.advancedmachines;
 
 import ic2.api.recipe.RecipeOutput;
+import ic2.core.block.comp.Redstone;
 import ic2.core.block.invslot.InvSlotOutput;
 import ic2.core.block.machine.tileentity.TileEntityCompressor;
+import ic2.core.upgrade.UpgradableProperty;
 
 import java.util.ArrayList;
+import java.util.EnumSet;
 import java.util.List;
+import java.util.Set;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
-public class TileEntityAdvancedCompressor extends TileEntityCompressor implements IAdvancedMachine {
+public class TileEntityAdvancedCompressor extends TileEntityCompressor implements IAdvancedMachine, IRedstoneUpgrade {
 
 	private final CommonLogicAdvancedMachines advLogic;
+	private Redstone redstone;
 
 	public TileEntityAdvancedCompressor() {
 		super();
 		advLogic = new CommonLogicAdvancedMachines("%6d PSI", 10);
 		advLogic.getOutputSlots().add(outputSlot);
+		this.redstone = addComponent(new Redstone(this));
 	}
 
 	@Override
@@ -74,4 +80,14 @@ public class TileEntityAdvancedCompressor extends TileEntityCompressor implement
 		return advLogic.getOutputSlots();
 	}
 
+	@Override
+	public Set<UpgradableProperty> getUpgradableProperties() {
+		return EnumSet.of(UpgradableProperty.RedstoneSensitive, UpgradableProperty.ItemConsuming,
+				UpgradableProperty.ItemProducing);
+	}
+	
+	@Override
+	public boolean hasRedstoneUpgrade() {
+		return this.redstone.hasRedstoneInput();
+	}
 }

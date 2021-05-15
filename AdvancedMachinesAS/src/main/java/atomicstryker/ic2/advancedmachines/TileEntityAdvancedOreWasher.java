@@ -1,23 +1,28 @@
 package atomicstryker.ic2.advancedmachines;
 
+import java.util.ArrayList;
+import java.util.EnumSet;
+import java.util.List;
+import java.util.Set;
+
 import ic2.api.recipe.RecipeOutput;
+import ic2.core.block.comp.Redstone;
 import ic2.core.block.invslot.InvSlotOutput;
 import ic2.core.block.machine.tileentity.TileEntityOreWashing;
-
-import java.util.ArrayList;
-import java.util.List;
-
+import ic2.core.upgrade.UpgradableProperty;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
-public class TileEntityAdvancedOreWasher extends TileEntityOreWashing implements IAdvancedMachine {
+public class TileEntityAdvancedOreWasher extends TileEntityOreWashing implements IAdvancedMachine, IRedstoneUpgrade {
 
 	private final CommonLogicAdvancedMachines advLogic;
+	private Redstone redstone;
 
 	public TileEntityAdvancedOreWasher() {
 		super();
 		advLogic = new CommonLogicAdvancedMachines("%5d RPM", 1);
 		advLogic.getOutputSlots().add(outputSlot);
+		this.redstone = addComponent(new Redstone(this));
 	}
 
 	@Override
@@ -75,4 +80,14 @@ public class TileEntityAdvancedOreWasher extends TileEntityOreWashing implements
 		return advLogic.getOutputSlots();
 	}
 
+	@Override
+	public Set<UpgradableProperty> getUpgradableProperties() {
+		return EnumSet.of(UpgradableProperty.RedstoneSensitive, UpgradableProperty.ItemConsuming,
+				UpgradableProperty.ItemProducing);
+	}
+
+	@Override
+	public boolean hasRedstoneUpgrade() {
+		return this.redstone.hasRedstoneInput();
+	}
 }
