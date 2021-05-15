@@ -30,7 +30,7 @@ import cpw.mods.fml.common.network.IGuiHandler;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 
-@Mod(modid = "AdvancedMachines", name = "IC2 Advanced Machines Addon", version = "1.1.7", dependencies = "required-after:IC2@2.2.775")
+@Mod(modid = "AdvancedMachines", name = "IC2 Advanced Machines Addon", version = "1.1.7.1", dependencies = "required-after:IC2@2.2.775")
 public class ModAdvancedMachines implements IGuiHandler, IProxy {
 
 	@SidedProxy(clientSide = "atomicstryker.ic2.advancedmachines.client.AdvancedMachinesClient", serverSide = "atomicstryker.ic2.advancedmachines.ModAdvancedMachines")
