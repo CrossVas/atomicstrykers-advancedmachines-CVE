@@ -23,6 +23,8 @@ public class ItemAdvancedMachine extends ItemBlock {
 		int meta = stack.getItemDamage();
 		if (meta == 4) {
 			info.add("Power" + " " + "16 EU/t" + ", " + "32 EU/t " + StatCollector.translateToLocal("ic2.item.tooltip.max"));
+		} else if (meta == 3) {
+			info.add("Power" + " " + "3 EU/t" + ", " + "128 EU/t " + StatCollector.translateToLocal("ic2.item.tooltip.max"));
 		} else {
 			info.add("Power" + " " + "6 EU/t" + ", " + "128 EU/t " + StatCollector.translateToLocal("ic2.item.tooltip.max"));
 		}
