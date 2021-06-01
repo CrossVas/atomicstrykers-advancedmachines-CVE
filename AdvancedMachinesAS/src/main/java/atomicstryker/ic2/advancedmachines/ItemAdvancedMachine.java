@@ -9,7 +9,6 @@ import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
 
 public class ItemAdvancedMachine extends ItemBlock {
@@ -21,7 +20,12 @@ public class ItemAdvancedMachine extends ItemBlock {
 	
 	@Override
 	public void addInformation(ItemStack stack, EntityPlayer player, List info, boolean bool) {
-		info.add("128 EU/t " + StatCollector.translateToLocal("ic2.item.tooltip.max"));
+		int meta = stack.getItemDamage();
+		if (meta == 4) {
+			info.add("Power" + " " + "16 EU/t" + ", " + "32 EU/t " + StatCollector.translateToLocal("ic2.item.tooltip.max"));
+		} else {
+			info.add("Power" + " " + "6 EU/t" + ", " + "128 EU/t " + StatCollector.translateToLocal("ic2.item.tooltip.max"));
+		}
 	}
 
 	@Override

@@ -5,27 +5,35 @@ import java.util.EnumSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import java.util.Vector;
+import java.util.Map.Entry;
 
+import atomicstryker.ic2.advancedmachines.client.GuiRotaryMacerator;
 import ic2.api.item.IC2Items;
 import ic2.api.recipe.RecipeOutput;
 import ic2.api.recipe.Recipes;
+import ic2.core.BasicMachineRecipeManager;
 import ic2.core.block.comp.Redstone;
 import ic2.core.block.invslot.InvSlot;
 import ic2.core.block.invslot.InvSlotOutput;
-import ic2.core.block.machine.tileentity.TileEntityMacerator;
+import ic2.core.block.invslot.InvSlotProcessableGeneric;
+import ic2.core.block.machine.tileentity.TileEntityStandardMachine;
 import ic2.core.upgrade.UpgradableProperty;
+import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
-public class TileEntityAdvancedMacerator extends TileEntityMacerator implements IAdvancedMachine, IRedstoneUpgrade {
+public class TileEntityAdvancedMacerator extends TileEntityStandardMachine implements IAdvancedMachine, IRedstoneUpgrade {
 	public static final int MAIN_IN_SLOT_INDEX = 0;
 	public static final int SUPPLEMENT_SLOT_INDEX = 8;
 	public static final int EXTRA_OUT_SLOT_INDEX = 4;
 
 	private final CommonLogicAdvancedMachines advLogic;
 	private Redstone redstone;
+	public static List<Entry<ItemStack, ItemStack>> recipes = new Vector();
 
 	public int supplementedItemsLeft = 0;
 	private int nextSupplementResultCount;
@@ -49,13 +57,14 @@ public class TileEntityAdvancedMacerator extends TileEntityMacerator implements 
 	private final InvSlot supplementSlot;
 
 	public TileEntityAdvancedMacerator() {
-		super();
+		super(6, 900, 2, 2);
 		advLogic = new CommonLogicAdvancedMachines("%5d RPM", 1);
 		advLogic.getOutputSlots().add(outputSlot);
 		advLogic.getOutputSlots().add(new InvSlotOutput(this, "outputextra1", EXTRA_OUT_SLOT_INDEX, 1));
 		supplementSlot = new InvSlot(this, "supplement", SUPPLEMENT_SLOT_INDEX, InvSlot.Access.I, 1);
 		this.redstone = addComponent(new Redstone(this));
-
+		this.inputSlot = new InvSlotProcessableGeneric(this, "input", 0, 1, Recipes.macerator);
+		
 		idCopperOreCrushed = IC2Items.getItem("crushedCopperOre");
 		idTinOreCrushed = IC2Items.getItem("crushedTinOre");
 		idCoalDust = IC2Items.getItem("coalDust");
@@ -70,6 +79,10 @@ public class TileEntityAdvancedMacerator extends TileEntityMacerator implements 
 		netherrack = new ItemStack(Blocks.netherrack);
 		ice = new ItemStack(Blocks.ice);
 		redstoneDust = new ItemStack(Items.redstone);
+	}
+	
+	public static void init() {
+		Recipes.macerator = new BasicMachineRecipeManager();
 	}
 
 	@Override
@@ -256,4 +269,14 @@ public class TileEntityAdvancedMacerator extends TileEntityMacerator implements 
 	public boolean hasRedstoneUpgrade() {
 		return this.redstone.hasRedstoneInput();
 	}
+	
+	@Override
+	public GuiScreen getGui(EntityPlayer player, boolean var2) {
+		return new GuiRotaryMacerator(new ContainerAdvancedMacerator(player, this), this);
+	}
+
+	@Override
+	public String getInventoryName() {
+		return "Rotary Macerator";
+	}	
 }

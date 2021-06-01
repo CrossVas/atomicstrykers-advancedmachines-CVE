@@ -3,28 +3,42 @@ package atomicstryker.ic2.advancedmachines;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
+import java.util.Map.Entry;
 import java.util.Set;
+import java.util.Vector;
 
+import atomicstryker.ic2.advancedmachines.client.GuiCentrifugeExtractor;
 import ic2.api.recipe.RecipeOutput;
+import ic2.api.recipe.Recipes;
+import ic2.core.BasicMachineRecipeManager;
 import ic2.core.block.comp.Redstone;
 import ic2.core.block.invslot.InvSlotOutput;
-import ic2.core.block.machine.tileentity.TileEntityExtractor;
+import ic2.core.block.invslot.InvSlotProcessableGeneric;
+import ic2.core.block.machine.tileentity.TileEntityStandardMachine;
 import ic2.core.upgrade.UpgradableProperty;
+import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
-public class TileEntityAdvancedExtractor extends TileEntityExtractor implements IAdvancedMachine, IRedstoneUpgrade {
+public class TileEntityAdvancedExtractor extends TileEntityStandardMachine implements IAdvancedMachine, IRedstoneUpgrade {
 
 	private final CommonLogicAdvancedMachines advLogic;
 	private Redstone redstone;
+	public static List<Entry<ItemStack, ItemStack>> recipes = new Vector();
 
 	public TileEntityAdvancedExtractor() {
-		super();
+		super(6, 900, 1, 2);
 		advLogic = new CommonLogicAdvancedMachines("%5d M/S", 1);
 		advLogic.getOutputSlots().add(outputSlot);
 		advLogic.getOutputSlots().add(new InvSlotOutput(this, "outputextra1", 4, 1));
 		advLogic.getOutputSlots().add(new InvSlotOutput(this, "outputextra2", 5, 1));
 		this.redstone = addComponent(new Redstone(this));
+		this.inputSlot = new InvSlotProcessableGeneric(this, "input", 0, 1, Recipes.extractor);
+	}
+	
+	public static void init() {
+		Recipes.extractor = new BasicMachineRecipeManager();
 	}
 
 	@Override
@@ -90,5 +104,15 @@ public class TileEntityAdvancedExtractor extends TileEntityExtractor implements 
 	@Override
 	public boolean hasRedstoneUpgrade() {
 		return this.redstone.hasRedstoneInput();
+	}
+
+	@Override
+	public GuiScreen getGui(EntityPlayer player, boolean var2) {
+		return new GuiCentrifugeExtractor(new ContainerAdvancedMachine<TileEntityStandardMachine>(player, this), this);
+	}
+
+	@Override
+	public String getInventoryName() {
+		return "Centrifuge Extractor";
 	}		
 }

@@ -25,6 +25,7 @@ public class TileEntityAdvancedRecycler extends TileEntityRecycler implements IA
 		advLogic.getOutputSlots().add(new InvSlotOutput(this, "outputextra1", 4, 1));
 		advLogic.getOutputSlots().add(new InvSlotOutput(this, "outputextra2", 5, 1));
 		this.redstone = addComponent(new Redstone(this));
+		this.setTier(2);
 	}
 
 	@Override

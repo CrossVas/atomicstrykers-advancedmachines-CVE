@@ -1,24 +1,8 @@
 package atomicstryker.ic2.advancedmachines;
 
-import ic2.api.item.IC2Items;
-import ic2.api.recipe.IRecipeInput;
-import ic2.api.recipe.Recipes;
-import ic2.core.IC2;
-import ic2.core.block.machine.container.ContainerOreWashing;
-import ic2.core.block.machine.tileentity.TileEntityOreWashing;
-import ic2.core.block.machine.tileentity.TileEntityStandardMachine;
-
 import java.util.ArrayList;
 import java.util.List;
 
-import net.minecraft.block.Block;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.world.World;
-import net.minecraftforge.common.config.Configuration;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
@@ -29,8 +13,22 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.IGuiHandler;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
+import ic2.api.item.IC2Items;
+import ic2.api.recipe.IRecipeInput;
+import ic2.api.recipe.Recipes;
+import ic2.core.IC2;
+import ic2.core.block.machine.container.ContainerOreWashing;
+import ic2.core.block.machine.tileentity.TileEntityOreWashing;
+import ic2.core.block.machine.tileentity.TileEntityStandardMachine;
+import net.minecraft.block.Block;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.world.World;
+import net.minecraftforge.common.config.Configuration;
 
-@Mod(modid = "AdvancedMachines", name = "IC2 Advanced Machines Addon", version = "1.1.7.1", dependencies = "required-after:IC2@2.2.775")
+@Mod(modid = "AdvancedMachines", name = "IC2 Advanced Machines Addon", version = "1.1.7.2", dependencies = "required-after:IC2@2.2.775")
 public class ModAdvancedMachines implements IGuiHandler, IProxy {
 
 	@SidedProxy(clientSide = "atomicstryker.ic2.advancedmachines.client.AdvancedMachinesClient", serverSide = "atomicstryker.ic2.advancedmachines.ModAdvancedMachines")

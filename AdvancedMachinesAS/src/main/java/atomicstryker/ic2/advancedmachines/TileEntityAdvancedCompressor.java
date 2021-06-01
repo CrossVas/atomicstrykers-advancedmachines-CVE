@@ -1,29 +1,43 @@
 package atomicstryker.ic2.advancedmachines;
 
 import ic2.api.recipe.RecipeOutput;
+import ic2.api.recipe.Recipes;
+import ic2.core.BasicMachineRecipeManager;
 import ic2.core.block.comp.Redstone;
 import ic2.core.block.invslot.InvSlotOutput;
-import ic2.core.block.machine.tileentity.TileEntityCompressor;
+import ic2.core.block.invslot.InvSlotProcessableGeneric;
+import ic2.core.block.machine.tileentity.TileEntityStandardMachine;
 import ic2.core.upgrade.UpgradableProperty;
 
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Set;
+import java.util.Vector;
+import java.util.Map.Entry;
 
+import atomicstryker.ic2.advancedmachines.client.GuiSingularityCompressor;
+import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
-public class TileEntityAdvancedCompressor extends TileEntityCompressor implements IAdvancedMachine, IRedstoneUpgrade {
+public class TileEntityAdvancedCompressor extends TileEntityStandardMachine implements IAdvancedMachine, IRedstoneUpgrade {
 
 	private final CommonLogicAdvancedMachines advLogic;
 	private Redstone redstone;
+	public static List<Entry<ItemStack, ItemStack>> recipes = new Vector();
 
 	public TileEntityAdvancedCompressor() {
-		super();
+		super(6, 900, 1, 2);
 		advLogic = new CommonLogicAdvancedMachines("%6d PSI", 10);
 		advLogic.getOutputSlots().add(outputSlot);
 		this.redstone = addComponent(new Redstone(this));
+		this.inputSlot = new InvSlotProcessableGeneric(this, "input", 0, 1, Recipes.compressor);
+	}
+	
+	public static void init() {
+		Recipes.compressor = new BasicMachineRecipeManager();
 	}
 
 	@Override
@@ -89,5 +103,15 @@ public class TileEntityAdvancedCompressor extends TileEntityCompressor implement
 	@Override
 	public boolean hasRedstoneUpgrade() {
 		return this.redstone.hasRedstoneInput();
+	}
+	
+	@Override
+	public GuiScreen getGui(EntityPlayer player, boolean var2) {
+		return new GuiSingularityCompressor(new ContainerAdvancedMachine<TileEntityStandardMachine>(player, this), this);
+	}
+
+	@Override
+	public String getInventoryName() {
+		return "Singularity Compressor";
 	}
 }

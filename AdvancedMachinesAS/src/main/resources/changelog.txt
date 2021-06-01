@@ -1,3 +1,7 @@
+Version 1.1.7.2
+    - removed unused imports 
+    - fixed advanced machine tiers (except ore washing plant) 
+    - version bump
 Version 1.1.7.1
     - adapted AM textures to IC2-style
     - removed ugly alpha-style flame particle from compressor, Advanced Machines now copy IC2 machines particles 
