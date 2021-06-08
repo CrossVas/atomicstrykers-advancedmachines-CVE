@@ -1,4 +1,7 @@
 Version 1.1.7.2
+    - Implemented GUI config
+    - Swithced to IC2 Recipes system, now Iron Plate uses oredict name, not IC2 one
+Version 1.1.7.2
     - removed unused imports 
     - fixed advanced machine tiers (except ore washing plant) 
     - version bump
