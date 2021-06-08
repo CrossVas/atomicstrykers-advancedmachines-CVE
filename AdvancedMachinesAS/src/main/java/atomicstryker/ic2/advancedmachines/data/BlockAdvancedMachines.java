@@ -1,10 +1,16 @@
-package atomicstryker.ic2.advancedmachines;
+package atomicstryker.ic2.advancedmachines.data;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
 
-import atomicstryker.ic2.advancedmachines.client.AdvancedMachinesClient;
+import atomicstryker.ic2.advancedmachines.AdvancedMachinesClient;
+import atomicstryker.ic2.advancedmachines.AdvancedMachines;
+import atomicstryker.ic2.advancedmachines.tiles.TileEntityAdvancedCompressor;
+import atomicstryker.ic2.advancedmachines.tiles.TileEntityAdvancedExtractor;
+import atomicstryker.ic2.advancedmachines.tiles.TileEntityAdvancedMacerator;
+import atomicstryker.ic2.advancedmachines.tiles.TileEntityAdvancedOreWasher;
+import atomicstryker.ic2.advancedmachines.tiles.TileEntityAdvancedRecycler;
 import ic2.api.item.IC2Items;
 import ic2.api.tile.IWrenchable;
 import ic2.core.IC2;
@@ -244,7 +250,7 @@ public class BlockAdvancedMachines extends BlockContainer {
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer entityPlayer, int par6, float par7,
 			float par8, float par9) {
 		if (!entityPlayer.isSneaking()) {
-			entityPlayer.openGui(ModAdvancedMachines.instance, 0, world, x, y, z);
+			entityPlayer.openGui(AdvancedMachines.instance, 0, world, x, y, z);
 			return true;
 		}
 

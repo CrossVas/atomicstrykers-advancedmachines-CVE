@@ -1,4 +1,4 @@
-package atomicstryker.ic2.advancedmachines;
+package atomicstryker.ic2.advancedmachines.data;
 
 import java.util.List;
 
