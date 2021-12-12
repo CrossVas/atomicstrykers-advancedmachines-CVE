@@ -24,6 +24,7 @@ archivesBaseName = "advancedmachines"
 minecraft {
     version = "1.7.10-10.13.4.1492-1.7.10"
     replace "@VERSION@", project.version
+    replaceIn "References.java"
 }
 
 dependencies {
