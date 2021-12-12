@@ -20,20 +20,20 @@ public class AdvancedMachinesData {
 	public static ItemStack stackCentrifugeExtractor;
 	public static ItemStack stackCombinedRecycler;
 	public static ItemStack stackRotaryOreWasher;
-	
+
 	public static void preInitData() {
 		blockAdvancedMachine = new BlockAdvancedMachines();
 		blockAdvancedMachine.setCreativeTab(IC2.tabIC2);
-		
+
 		GameRegistry.registerBlock(blockAdvancedMachine, ItemAdvancedMachine.class, "blockAdvMachine");
-		
+
 		stackRotaryMacerator = new ItemStack(blockAdvancedMachine, 1, 0);
 		stackSingularityCompressor = new ItemStack(blockAdvancedMachine, 1, 1);
 		stackCentrifugeExtractor = new ItemStack(blockAdvancedMachine, 1, 2);
 		stackCombinedRecycler = new ItemStack(blockAdvancedMachine, 1, 3);
 		stackRotaryOreWasher = new ItemStack(blockAdvancedMachine, 1, 4);
 	}
-	
+
 	public static void initData() {
 		GameRegistry.registerTileEntity(TileEntityAdvancedMacerator.class, "Rotary Macerator");
 		GameRegistry.registerTileEntity(TileEntityAdvancedCompressor.class, "Singularity Compressor");

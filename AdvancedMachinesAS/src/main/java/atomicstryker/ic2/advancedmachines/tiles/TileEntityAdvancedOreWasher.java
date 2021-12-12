@@ -29,6 +29,11 @@ public class TileEntityAdvancedOreWasher extends TileEntityOreWashing implements
 	}
 
 	@Override
+	public int getSinkTier() {
+		return 2;
+	}
+
+	@Override
 	public void readFromNBT(NBTTagCompound nbtt) {
 		super.readFromNBT(nbtt);
 		advLogic.readFromNBT(nbtt);

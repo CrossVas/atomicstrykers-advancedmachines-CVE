@@ -22,7 +22,6 @@ import ic2.core.block.machine.tileentity.TileEntityOreWashing;
 import ic2.core.block.machine.tileentity.TileEntityStandardMachine;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
-import net.minecraftforge.common.config.Configuration;
 
 @Mod(modid = References.MOD_ID, name = References.MOD_NAME, version = References.MOD_VER, dependencies = References.MOD_DEPS, acceptedMinecraftVersions = References.MC_VER, guiFactory = References.GUI_FACTORY)
 public class AdvancedMachines implements IGuiHandler, IProxy {
@@ -32,8 +31,6 @@ public class AdvancedMachines implements IGuiHandler, IProxy {
 
 	@Instance(value = References.MOD_ID)
 	public static AdvancedMachines instance;
-
-	private Configuration config;
 
 	static AdvancedMachinesData data;
 

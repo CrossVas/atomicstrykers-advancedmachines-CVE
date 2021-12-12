@@ -44,7 +44,7 @@ public class GuiCentrifugeExtractor extends GuiContainer {
 		int j = (this.width - this.xSize) / 2;
 		int k = (this.height - this.ySize) / 2;
 		drawTexturedModalRect(j, k, 0, 0, this.xSize, this.ySize);
-		
+
 		if (this.container.base instanceof IUpgradableBlock) {
 			int xoffset = (this.width - this.xSize) / 2;
 			int yoffset = (this.height - this.ySize) / 2;

@@ -26,8 +26,8 @@ public class GuiRotaryMacerator extends GuiContainer {
 
 	@Override
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-		this.fontRendererObj.drawString(StatCollector.translateToLocal("item.advancedmachines:rotaryMacerator.name"), 16,
-				4, 4210752);
+		this.fontRendererObj.drawString(StatCollector.translateToLocal("item.advancedmachines:rotaryMacerator.name"),
+				16, 4, 4210752);
 		this.fontRendererObj.drawString("Inventory", 8, this.ySize - 96 + 2, 4210752);
 		this.fontRendererObj.drawString("Speed:", 4, 36, 4210752);
 		this.fontRendererObj.drawString(((IAdvancedMachine) container.base).printFormattedData(), 10, 44, 4210752);
@@ -44,7 +44,7 @@ public class GuiRotaryMacerator extends GuiContainer {
 		int j = (this.width - this.xSize) / 2;
 		int k = (this.height - this.ySize) / 2;
 		drawTexturedModalRect(j, k, 0, 0, this.xSize, this.ySize);
-		
+
 		if (this.container.base instanceof IUpgradableBlock) {
 			int xoffset = (this.width - this.xSize) / 2;
 			int yoffset = (this.height - this.ySize) / 2;

@@ -4,47 +4,37 @@ import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Set;
-import java.util.Vector;
-import java.util.Map.Entry;
 
-import atomicstryker.ic2.advancedmachines.container.ContainerAdvancedMachine;
-import atomicstryker.ic2.advancedmachines.gui.GuiCombinedRecycler;
 import atomicstryker.ic2.advancedmachines.interfaces.IAdvancedMachine;
 import atomicstryker.ic2.advancedmachines.interfaces.IRedstoneUpgrade;
 import atomicstryker.ic2.advancedmachines.utils.CommonLogicAdvancedMachines;
 import ic2.api.recipe.RecipeOutput;
-import ic2.api.recipe.Recipes;
-import ic2.core.BasicMachineRecipeManager;
 import ic2.core.block.comp.Redstone;
 import ic2.core.block.invslot.InvSlotOutput;
-import ic2.core.block.invslot.InvSlotProcessableGeneric;
-import ic2.core.block.machine.tileentity.TileEntityStandardMachine;
+import ic2.core.block.machine.tileentity.TileEntityRecycler;
 import ic2.core.upgrade.UpgradableProperty;
-import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
-public class TileEntityAdvancedRecycler extends TileEntityStandardMachine implements IAdvancedMachine, IRedstoneUpgrade {
+public class TileEntityAdvancedRecycler extends TileEntityRecycler implements IAdvancedMachine, IRedstoneUpgrade {
 
 	private final CommonLogicAdvancedMachines advLogic;
 	private Redstone redstone;
-	public static List<Entry<ItemStack, ItemStack>> recipes = new Vector();
 
 	public TileEntityAdvancedRecycler() {
-		super(3, 45, 3, 2);
+		super();
 		advLogic = new CommonLogicAdvancedMachines("%5d cm3/s", 1);
 		advLogic.getOutputSlots().add(outputSlot);
 		advLogic.getOutputSlots().add(new InvSlotOutput(this, "outputextra1", 4, 1));
 		advLogic.getOutputSlots().add(new InvSlotOutput(this, "outputextra2", 5, 1));
 		this.redstone = addComponent(new Redstone(this));
-		this.inputSlot = new InvSlotProcessableGeneric(this, "input", 0, 1, Recipes.recycler);
 	}
 
-	public static void init() {
-		Recipes.recycler = new BasicMachineRecipeManager();
+	@Override
+	public int getSinkTier() {
+		return 2;
 	}
-	
+
 	@Override
 	public void readFromNBT(NBTTagCompound nbtt) {
 		super.readFromNBT(nbtt);
@@ -109,14 +99,4 @@ public class TileEntityAdvancedRecycler extends TileEntityStandardMachine implem
 	public boolean hasRedstoneUpgrade() {
 		return this.redstone.hasRedstoneInput();
 	}
-	
-	@Override
-	public GuiScreen getGui(EntityPlayer player, boolean var2) {
-		return new GuiCombinedRecycler(new ContainerAdvancedMachine<TileEntityStandardMachine>(player, this), this);
-	}
-
-	@Override
-	public String getInventoryName() {
-		return "Combined Recycler";
-	}	
 }

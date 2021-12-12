@@ -29,8 +29,8 @@ public class GuiRotaryOreWasher extends GuiContainer {
 
 	@Override
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-		this.fontRendererObj.drawString(StatCollector.translateToLocal("item.advancedmachines:rotaryOreWasher.name"), 16,
-				4, 4210752);
+		this.fontRendererObj.drawString(StatCollector.translateToLocal("item.advancedmachines:rotaryOreWasher.name"),
+				16, 4, 4210752);
 
 		FluidStack fluidstack = ((TileEntityOreWashing) this.container.base).getFluidStackfromTank();
 		if (fluidstack != null) {
@@ -51,7 +51,7 @@ public class GuiRotaryOreWasher extends GuiContainer {
 		int xOffset = (this.width - this.xSize) / 2;
 		int yOffset = (this.height - this.ySize) / 2;
 		drawTexturedModalRect(xOffset, yOffset, 0, 0, this.xSize, this.ySize);
-		
+
 		if (this.container.base instanceof IUpgradableBlock) {
 			int xoffset = (this.width - this.xSize) / 2;
 			int yoffset = (this.height - this.ySize) / 2;

@@ -1,26 +1,23 @@
 package atomicstryker.ic2.advancedmachines.utils;
 
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
+
+import atomicstryker.ic2.advancedmachines.config.AdvancedMachinesConfig;
+import atomicstryker.ic2.advancedmachines.interfaces.IAdvancedMachine;
+import atomicstryker.ic2.advancedmachines.interfaces.IRedstoneUpgrade;
 import ic2.api.recipe.RecipeOutput;
 import ic2.core.block.TileEntityLiquidTankStandardMaschine;
 import ic2.core.block.invslot.InvSlotOutput;
 import ic2.core.block.machine.tileentity.TileEntityStandardMachine;
 import ic2.core.item.ItemUpgradeModule;
-
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.List;
-
-import atomicstryker.ic2.advancedmachines.AdvancedMachines;
-import atomicstryker.ic2.advancedmachines.config.AdvancedMachinesConfig;
-import atomicstryker.ic2.advancedmachines.interfaces.IAdvancedMachine;
-import atomicstryker.ic2.advancedmachines.interfaces.IRedstoneUpgrade;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
 public class CommonLogicAdvancedMachines implements IAdvancedMachine {
 
-	private AdvancedMachines mod;
 	private final ArrayList<InvSlotOutput> outSlotList;
 
 	private boolean runningEmpty;
@@ -33,7 +30,6 @@ public class CommonLogicAdvancedMachines implements IAdvancedMachine {
 	private static Field progressField;
 
 	public CommonLogicAdvancedMachines(String dF, int dS) {
-		mod = AdvancedMachines.instance;
 		outSlotList = new ArrayList<InvSlotOutput>();
 		speed = 0;
 		dataFormat = dF;
@@ -109,13 +105,8 @@ public class CommonLogicAdvancedMachines implements IAdvancedMachine {
 			return ic2Output;
 		}
 
-		if (te.hasWorldObj() && te.getWorldObj().isBlockIndirectlyGettingPowered(te.xCoord, te.yCoord, te.zCoord)
-				&& !hasRedstone(te)) {
-			runningEmpty = true;
-			return dummyOut;
-		}
-
-		if (!te.getWorldObj().isBlockIndirectlyGettingPowered(te.xCoord, te.yCoord, te.zCoord) && hasRedstone(te)) {
+		boolean isPowered = te.getWorldObj().isBlockIndirectlyGettingPowered(te.xCoord, te.yCoord, te.zCoord);
+		if (te.hasWorldObj() && ((isPowered && !hasRedstone(te)) || (!isPowered && hasRedstone(te)))) {
 			runningEmpty = true;
 			return dummyOut;
 		}
@@ -153,8 +144,8 @@ public class CommonLogicAdvancedMachines implements IAdvancedMachine {
 					 * and further increment it the goal here is to increase the base processing
 					 * speed to up to N*100% by calculating the speed
 					 */
-					short extraprogress = (short) Math
-							.round(speed / (AdvancedMachinesConfig.maxMachineSpeedUpTicks / (AdvancedMachinesConfig.maxMachineSpeedUpFactor - 1)));
+					short extraprogress = (short) Math.round(speed / (AdvancedMachinesConfig.maxMachineSpeedUpTicks
+							/ (AdvancedMachinesConfig.maxMachineSpeedUpFactor - 1)));
 					/** this yields 0-n extra progress ticks */
 					progressField.set(te, (short) (progressField.getShort(te) + extraprogress));
 				}

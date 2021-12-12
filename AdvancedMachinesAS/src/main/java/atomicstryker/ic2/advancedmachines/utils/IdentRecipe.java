@@ -7,12 +7,12 @@ import ic2.api.recipe.IRecipeInput;
 import net.minecraft.item.ItemStack;
 
 public class IdentRecipe implements IRecipeInput {
-	
+
 	/**
 	 * matches will return false ONCE to get past the input == output check Player
 	 * so thoughtfully added
 	 */
-	
+
 	boolean registerHackActive;
 	private ArrayList<ItemStack> inputresult;
 

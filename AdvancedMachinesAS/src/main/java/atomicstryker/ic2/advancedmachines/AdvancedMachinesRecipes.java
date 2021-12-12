@@ -11,7 +11,7 @@ import net.minecraft.nbt.NBTTagCompound;
 public class AdvancedMachinesRecipes {
 
 	static AdvancedMachinesData data;
-	
+
 	public static void initRecipes() {
 		if (AdvancedMachinesConfig.enableRotaryMaceratorRecipe) {
 			Recipes.advRecipes.addRecipe(data.stackRotaryMacerator,
@@ -59,5 +59,5 @@ public class AdvancedMachinesRecipes {
 							IC2Items.getItem("advancedMachine") });
 		}
 	}
-	
+
 }
