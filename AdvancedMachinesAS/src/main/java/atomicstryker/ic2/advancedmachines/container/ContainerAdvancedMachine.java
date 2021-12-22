@@ -18,10 +18,10 @@ public class ContainerAdvancedMachine<T extends TileEntityStandardMachine> exten
 		speedNetworked = 0;
 
 		if (advM.getOutputSlots().size() == 2) {
-			addSlotToContainer(new SlotInvSlot(advM.getOutputSlots().get(1), 0, 115, 53));
+			addSlotToContainer(new SlotInvSlot(advM.getOutputSlots().get(1), 0, 116, 53));
 		} else if (advM.getOutputSlots().size() == 3) {
-			addSlotToContainer(new SlotInvSlot(advM.getOutputSlots().get(1), 0, 115, 17));
-			addSlotToContainer(new SlotInvSlot(advM.getOutputSlots().get(2), 0, 115, 53));
+			addSlotToContainer(new SlotInvSlot(advM.getOutputSlots().get(1), 0, 116, 17));
+			addSlotToContainer(new SlotInvSlot(advM.getOutputSlots().get(2), 0, 116, 53));
 		}
 	}
 
